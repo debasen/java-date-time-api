@@ -1,8 +1,10 @@
 package com.example.dateTime;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 
 /**
@@ -15,8 +17,9 @@ import java.time.temporal.TemporalAdjusters;
 public class DateTimeTest {
 
 	public static void main(String[] args) {
-		testDateCreation();
-		testDateManipulation();
+		 testDateCreation();
+		 testDateManipulation();
+		testTimeCreation();
 	}
 
 	/**
@@ -67,6 +70,37 @@ public class DateTimeTest {
 		// Use TemporalAdjusters
 		String firstDayOfNextMonth = dateUnderTest.with(TemporalAdjusters.firstDayOfNextMonth()).getDayOfWeek().name();
 		System.out.println("First day of next month: " + firstDayOfNextMonth);
+
+		// Length of month
+		int lengthOfMonth = dateUnderTest.lengthOfMonth();
+		System.out.println("Length of month: " + lengthOfMonth);
+
+		// Is past or future date
+		LocalDate futureDate = LocalDate.of(2015, 4, 26);
+		boolean isAfter = futureDate.isAfter(dateUnderTest);
+		System.out.println("2015-04-26 date is after 2015-04-22: " + isAfter);
+
+		// Difference in Days between two dates
+		long days = ChronoUnit.DAYS.between(dateUnderTest, futureDate); // DAYS is one of the enum defined in ChronoUnit
+		System.out.println("Days between: " + days);
+	}
+
+	/**
+	 * This method explains different strategies for LocalTime Creation
+	 * 
+	 */
+	public static void testTimeCreation() {
+		// Get the current time in HH:mm:ss.SSS format
+		LocalTime currentTime = LocalTime.now();
+		System.out.println("Current Time: " + currentTime);
+
+		// Create Time with Hour, Minute & Second
+		LocalTime simpleTime = LocalTime.of(13, 25, 56);
+		System.out.println("Simple Time: " + simpleTime);
+
+		// Create LocalTime using Time String
+		LocalTime timeUsingString = LocalTime.parse("01:23:29");
+		System.out.println("Time using String: " + timeUsingString);
 
 	}
 
